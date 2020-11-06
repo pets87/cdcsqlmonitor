@@ -11,8 +11,8 @@ Compatibility – All
 ### Prerequisities
 Tables must have primary key column. It can be any type.
 
-### Using
 
+### Setup
 Step 1
 For Change Tracking in SQL Server you need to enable it on the database first.
 ```sql
@@ -25,7 +25,7 @@ Manually:
 ALTER TABLE AMytable ENABLE CHANGE_TRACKING WITH (TRACK_COLUMNS_UPDATED = ON)
 ALTER TABLE AMytable2 ENABLE CHANGE_TRACKING WITH (TRACK_COLUMNS_UPDATED = ON)
 ```
-
+### Using
 Code:
 ```csharp
    static void Main(string[] args)
@@ -90,6 +90,40 @@ private static void Monitor_OnRecordChnaged(object sender, CDCSqlMonitor.CT.Even
 ```
 
 ## CDC - Change Data Capture
-```csharp
+
+Compatibility:
+ Azure SQL managed instance only
+ Standard, Developer and Enterprise Editions 2016 and up
+ 
+ ### Prerequisities
+Tables must have primary key column. It can be any type.
+
+### Setup
+Step 1
+For Change Tracking in SQL Server you need to enable it on the database first.
+```sql
+    --enable cdc on database
+	EXEC sys.sp_cdc_enable_db
+	--disable cdc on databse
+	EXEC sys.sp_cdc_disable_db
 ```
+Next you need to enable Change tracking on the tables as well. This can be done only manually for CDC.
+
+CT can be enabled in code. 
+CDC can not be enabled in code. Only manually.
+Reason: Enabling cdc on tables need sysadmin rights on database. Applications never have those.
+```sql
+    --enable on table
+	EXEC sys.sp_cdc_enable_table @source_schema='dbo', @source_name= 'MyTable', @role_name=NULL
+    --disable on table
+	EXEC sys.sp_cdc_disable_table @source_schema='dbo', @source_name= 'MyTable', @capture_instance = 'all'
+```
+
+
+
+
+
+
+
+
 
