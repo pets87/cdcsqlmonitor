@@ -14,11 +14,8 @@ CDC - Change data capture. This will return changed columns on table. This is no
     <RepositoryUrl>https://github.com/pets87/cdcsqlmonitor</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageIcon>icon.png</PackageIcon>
+    <PackageTags>CDCSqlMonitor SQL Server CDC CT SqlMonitor</PackageTags>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="CDC\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
