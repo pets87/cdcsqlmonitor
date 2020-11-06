@@ -13,8 +13,7 @@ Tables must have primary key column. It can be any type.
 
 
 ### Setup
-Step 1
-For Change Tracking in SQL Server you need to enable it on the database first.
+**Step 1 - For Change Tracking in SQL Server you need to enable it on the database first.**
 ```sql
 ALTER DATABASE [AdventureWorks2017] SET CHANGE_TRACKING = ON(CHANGE_RETENTION = 7 DAYS, AUTO_CLEANUP = ON)
 ```
@@ -47,7 +46,7 @@ Code:
 ```
 
 
-Step 2 - Listen to changes
+**Step 2 - Listen to changes**
 ```csharp
 private static void Monitor_OnRecordChnaged(object sender, CDCSqlMonitor.CT.EventArgs.DataChangedEventArgs e)
         {
@@ -99,8 +98,7 @@ Compatibility:
 Tables must have primary key column. It can be any type.
 
 ### Setup
-Step 1
-For Change Tracking in SQL Server you need to enable it on the database first.
+**Step 1 - For Change Tracking in SQL Server you need to enable it on the database first.**
 ```sql
     --enable cdc on database
 	EXEC sys.sp_cdc_enable_db
