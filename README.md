@@ -90,9 +90,7 @@ private static void Monitor_OnRecordChnaged(object sender, CDCSqlMonitor.CT.Even
 
 ## CDC - Change Data Capture
 
-Compatibility:
- Azure SQL managed instance only
- Standard, Developer and Enterprise Editions 2016 and up
+Compatibility: Azure SQL managed instance only, Standard, Developer and Enterprise Editions 2016 and up
  
  ### Prerequisities
 Tables must have primary key column. It can be any type.
