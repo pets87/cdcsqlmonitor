@@ -2,6 +2,7 @@
 You can monitor Sql Server Database changes by using CDC or CT.
 
 CT - Change tracking. This will return only primary key value from changed table. This is supported on all sql server versions.
+
 CDC - Change data capture. This will return changed columns on table. This is not supported on all sql server versions.
 
 ## CT - Chnage Tracking
