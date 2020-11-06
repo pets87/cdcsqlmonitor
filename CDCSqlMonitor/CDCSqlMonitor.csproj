@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Authors>PeeterK</Authors>
+    <Company>ETEK</Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/pets87/cdcsqlmonitor</PackageProjectUrl>
+    <Description>You can monitor Sql Server Database changes by using CDC or CT.
+
+CT - Change tracking. This will return only primary key value from changed table. This is supported on all sql server versions.
+
+CDC - Change data capture. This will return changed columns on table. This is not supported on all sql server versions.</Description>
+    <RepositoryUrl>https://github.com/pets87/cdcsqlmonitor</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+    <PackageIcon>icon.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="CDC\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
