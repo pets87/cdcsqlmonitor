@@ -143,3 +143,58 @@ EXECUTE sys.sp_cdc_change_job
 ```
 
 
+### Using
+Code:
+```csharp
+   static void Main(string[] args)
+        {
+            var connectionString = "Your Connectionstring";
+            CDC.Monitor monitor = new CDC.Monitor(connectionString, 5);// 5 - Interval in seconds
+            monitor.OnError += Monitor_OnError;
+            monitor.OnRecordChnaged += Monitor_OnRecordChnaged;
+           
+
+            monitor.Start();
+            Console.ReadLine();
+        }
+```
+
+
+**Step 2 - Listen to changes**
+```csharp
+        private void Monitor_OnRecordChnaged(object sender, DataChangedEventArgs e)
+        {
+            foreach (var item in e.ChangedEntities)
+            {
+                Debug.WriteLine("Operation: " + item.ChangeType.ToString() + "  Table: " + item.TableName + "\n");
+                foreach (var col in item.Columns) 
+                {
+                    Debug.WriteLine("Column: " + col.Name + "  Value: " + col.Value+ (col.OldValue != null ? "OldValue: "+col.OldValue :"") +"\n");
+                }
+                Debug.WriteLine("\n");
+            }
+        }
+
+        private static void Monitor_OnError(object sender, CDCSqlMonitor.CT.EventArgs.ErrorEventArgs e)
+        {
+            Debug.WriteLine(e.Exception.StackTrace);
+        }
+```
+
+Output:
+```sh
+Operation: UPDATE_NEW_VALUE  Table: MyTable
+Column: ID  Value: 10 OldValue: 10
+Column: Name  Value: row changed OldValue: row inserted
+Column: Time  Value: 
+
+Operation: INSERT  Table: MyTable
+Column: ID  Value: 10
+Column: Name  Value: row inserted
+Column: Time  Value: 
+
+Operation: DELETE  Table: MyTable
+Column: ID  Value: 10
+Column: Name  Value: row changed
+Column: Time  Value:
+```
