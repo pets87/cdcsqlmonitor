@@ -7,7 +7,7 @@ CDC - Change data capture. This will return changed columns on table. This is no
 
 # Install
 [Install-Package CDCSqlMonitor](https://www.nuget.org/packages/CDCSqlMonitor/1.0.0/)
-\
+
 
 
 ## CT - Chnage Tracking
