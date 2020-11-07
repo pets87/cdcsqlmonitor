@@ -68,7 +68,7 @@ Operation: D  Table: dbo.AMytable2 ID: newstringID ChangeVersion: 26
 Operation: U  Table: dbo.AMytable2 ID: stringID ChangeVersion: 27
 ```
 
-Note that you need to keep track of the changes by yourself. On the first run, it will return all changes on all described tables. In this example i had AMytable with 3 changes. If i run the program next time, then i need only new changes, so i will ignore other changes. 
+Note that you need to keep track of the changes by yourself. On the first run, it will return all changes on all described tables. In this example i had AMytable with 3 changes. If i run the program next time, then i need only new changes, so i will need to ignore other changes. 
 Example:
 ```csharp
 private static void Monitor_OnRecordChnaged(object sender, CDCSqlMonitor.CT.EventArgs.DataChangedEventArgs e)
@@ -105,8 +105,8 @@ Tables must have primary key column. It can be any type.
 ```
 Next you need to enable Change tracking on the tables as well. This can be done only manually for CDC.
 
-CT can be enabled in code. 
-CDC can not be enabled in code. Only manually.
+CT can be enabled in code. \
+CDC can not be enabled in code. Only manually.\
 Reason: Enabling cdc on tables need sysadmin rights on database. Applications never have those.
 ```sql
     --enable on table
