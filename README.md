@@ -115,11 +115,31 @@ Reason: Enabling cdc on tables need sysadmin rights on database. Applications ne
 	EXEC sys.sp_cdc_disable_table @source_schema='dbo', @source_name= 'MyTable', @capture_instance = 'all'
 ```
 
+Now you have enabled Change Data tracking on your table(s).
+**Do not forget to configure capture and cleanup jobs!**
+More information: https://www.sqlservercentral.com/blogs/setting-up-change-data-capture-cdc
 
+Check default configuration:
+```sql
+Select db_name(database_id) database_name, job_type, B.name,
+maxtrans,continuous,pollinginterval,retention,threshold from msdb.dbo.cdc_jobs A
+inner join msdb.dbo.sysjobs B on A.job_id= B.job_id
+Order by job_type asc
+```
 
+Configure change job
+```sql
+EXECUTE sys.sp_cdc_change_job   
+    @job_type = N'capture',  
+    @maxscans = 500,  
+    @pollinginterval = 5;--value in seconds
+```
 
-
-
-
+Confuigure cleanup job
+```sql
+EXECUTE sys.sp_cdc_change_job   
+    @job_type = N'cleanup',  
+    @retention = 1440; --value in minutes. Default is 3 days
+```
 
 
