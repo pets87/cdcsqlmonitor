@@ -68,8 +68,8 @@ Operation: D  Table: dbo.AMytable2 ID: newstringID ChangeVersion: 26
 Operation: U  Table: dbo.AMytable2 ID: stringID ChangeVersion: 27
 ```
 
-Note that you need to keep track of the changes by yourself. On the first run, it will return all changes on all described tables. \
-In this example i had AMytable with 3 changes. If i stop and run the program again, then i need only new changes, so i will need to pass parameter where to start from.
+**Note that you need to keep track of the changes by yourself.** On the first run, it will return all changes on all described tables. \
+In this example i had AMytable with 3 changes. If i stop and run the program again, then i need only new changes, so i will need to pass parameter where to start from.\ Otherwise it will return all changes that have been occured since last cleanup. In this example this was 7 days (CHANGE_RETENTION = 7 DAYS).
 
 Example:
 ```csharp
@@ -213,3 +213,24 @@ If you want to see updates as sepparate rows, then you can access Raw data from 
         }
 ```
 
+**Note that you need to keep track of the changes by yourself.** On the first run, it will return all changes on all tables. \
+In this example i had MyTable with 3 changes. If i stop and run the program again, then i need only new changes, so i will need to pass parameter where to start from.\ 
+Otherwise it will return all changes that have been occured since last cleanup. In this example this was 1 day. ( @retention = 1440;).
+
+Example:
+```csharp
+
+//1. Keep track of change version
+private static void Monitor_OnRecordChnaged(object sender, CDCSqlMonitor.CDC.EventArgs.DataChangedEventArgs e)
+{
+   SaveLastChange(e.LastSequenceValue);//byte array with length of 10(byte[10]). Becuase in Sql server __$seqval is binary(10).
+}
+//2. On startup pass saved parameter
+void Start()
+{
+   var mySavedLastChange = GetLastChange();
+   CDC.Monitor monitor = new CDC.Monitor(connectionString, 5, mySavedLastChange);	
+}
+
+	
+```
