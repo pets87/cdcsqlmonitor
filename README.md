@@ -117,7 +117,7 @@ Reason: Enabling cdc on tables need sysadmin rights on database. Applications ne
 
 Now you have enabled Change Data tracking on your table(s).\
 **Do not forget to configure capture and cleanup jobs!**\
-More information: https://www.sqlservercentral.com/blogs/setting-up-change-data-capture-cdc\
+More information: https://www.sqlservercentral.com/blogs/setting-up-change-data-capture-cdc
 
 Check default configuration:
 ```sql
