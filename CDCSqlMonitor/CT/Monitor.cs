@@ -41,16 +41,18 @@ namespace CDCSqlMonitor.CT
         public event EventHandler<ErrorEventArgs> OnError;
         public int PollIntervalSeconds;
         public List<MonitorTable> MonitorTables;
+        public long LastChangeVersion;
 
         private string ConnectionString;
         private Thread Thread;
         private bool Running = false;
        
-        public Monitor(string connectionString, int pollIntervalSeconds, List<MonitorTable> monitorTables = null) 
+        public Monitor(string connectionString, int pollIntervalSeconds, long startFrom = 0, List<MonitorTable> monitorTables = null) 
         {
             ConnectionString = connectionString;
             PollIntervalSeconds = pollIntervalSeconds;
             MonitorTables = monitorTables;
+            LastChangeVersion = startFrom;
         }
 
         /// <summary>
@@ -73,6 +75,10 @@ namespace CDCSqlMonitor.CT
             MonitorTables.Add(table);
         }
 
+        /// <summary>
+        /// Remove table that needs to be monitored.
+        /// </summary>
+        /// <param name="tableName">Name of the table with schema</param>
         public void RemoveTable(string tableName)
         {
             if (MonitorTables != null) 
@@ -83,6 +89,9 @@ namespace CDCSqlMonitor.CT
             }           
         }
 
+        /// <summary>
+        /// Call this before running if you didn't setup CT on the database manually.
+        /// </summary>
         public void Setup() 
         {
             if (MonitorTables == null || MonitorTables.Count == 0)
@@ -104,8 +113,10 @@ namespace CDCSqlMonitor.CT
                 }
             }
         }
-
-
+        
+        /// <summary>
+        /// Start monitoring on tables described in Monitor.MonitorTables. Tables that added with AddTable method. Starts separate thread with polling. 
+        /// </summary>
         public void Start()
         {
             Running = true; 
@@ -125,7 +136,7 @@ namespace CDCSqlMonitor.CT
 
                                 foreach (var table in MonitorTables) 
                                 {
-                                    var sql = $"SELECT * FROM CHANGETABLE(CHANGES {table.TableName}, {table.LastVersion}) AS TableChanges order by SYS_CHANGE_VERSION DESC";
+                                    var sql = $"SELECT * FROM CHANGETABLE(CHANGES {table.TableName}, {LastChangeVersion}) AS TableChanges order by SYS_CHANGE_VERSION DESC";
                                     using (SqlCommand command = new SqlCommand(sql, con))
                                     {
                                         SqlDataReader reader = command.ExecuteReader();
@@ -154,7 +165,7 @@ namespace CDCSqlMonitor.CT
                                             args.ChangedEntities.Add(entity);                                            
                                         }
                                         var items = args.ChangedEntities.Where(x => x.TableName == table.TableName);
-                                        table.LastVersion = items.Count() > 0 ? items.Max(x => x.SYS_CHANGE_VERSION) : table.LastVersion;
+                                        args.LastChangeVersion = LastChangeVersion = items.Count() > 0 ? items.Max(x => x.SYS_CHANGE_VERSION) : LastChangeVersion;
                                     }
                                 }
                                 
@@ -178,8 +189,10 @@ namespace CDCSqlMonitor.CT
             });
             Thread.Start();
         }
-                
 
+        /// <summary>
+        /// Stop monitoring. Stops thread and dispose it.
+        /// </summary>
         public void Stop() 
         {
             Dispose();

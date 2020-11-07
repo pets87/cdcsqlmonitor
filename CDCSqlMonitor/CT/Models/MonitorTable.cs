@@ -31,8 +31,5 @@ namespace CDCSqlMonitor.CT.Models
     {
         public string TableName { get; set; }
         public string PrimaryKeyColumnName { get; set; }
-        
-        internal long LastVersion { get; set; }
-
     }
 }

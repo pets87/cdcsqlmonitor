@@ -26,10 +26,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CDCSqlMonitor.CTC.EventArgs
+namespace CDCSqlMonitor.CDC.EventArgs
 {
     public class DataChangedEventArgs: System.EventArgs
     {
         public List<Entity> ChangedEntities { get; set; }
+        public List<CDCModel> RawData { get; set; }
+        public byte[] LastSequenceValue { get; set; }
     }
 }

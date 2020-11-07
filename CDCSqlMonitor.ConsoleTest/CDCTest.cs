@@ -21,15 +21,44 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE
  */
+using CDCSqlMonitor.CDC.EventArgs;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
-namespace CDCSqlMonitor
+namespace CDCSqlMonitor.ConsoleTest
 {
-    public enum TrackingType
+    public class CDCTest
     {
-        CDC,
-        CT
+        public void Run()
+        {
+            var connectionString = "";
+            CDC.Monitor monitor = new CDC.Monitor(connectionString, 5);// 5 - Interval in seconds
+            monitor.OnError += Monitor_OnError;
+            monitor.OnRecordChnaged += Monitor_OnRecordChnaged;
+           
+
+            monitor.Start();
+            Console.ReadLine();
+        }
+
+        private void Monitor_OnRecordChnaged(object sender, DataChangedEventArgs e)
+        {
+            foreach (var item in e.ChangedEntities)
+            {
+                Debug.WriteLine("Operation: " + item.ChangeType.ToString() + "  Table: " + item.TableName + "\n");
+                foreach (var col in item.Columns) 
+                {
+                    Debug.WriteLine("Column: " + col.Name + "  Value: " + col.Value+ (col.OldValue != null ? " OldValue: "+col.OldValue :"") +"\n");
+                }
+                Debug.WriteLine("\n");
+            }
+        }
+
+        private void Monitor_OnError(object sender, ErrorEventArgs e)
+        {
+            Debug.WriteLine(e.Exception.StackTrace);
+        }
     }
 }

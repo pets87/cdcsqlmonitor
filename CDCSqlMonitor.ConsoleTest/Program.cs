@@ -29,32 +29,21 @@ namespace CDCSqlMonitor.ConsoleTest
 {
     class Program
     {
+        /*
+         Links
+        https://stackoverflow.com/questions/5288434/how-to-monitor-sql-server-table-changes-by-using-c
+        https://www.c-sharpcorner.com/uploadfile/satisharveti/introduction-to-cdc-change-data-capture-of-sql-server/
+        https://docs.microsoft.com/en-us/sql/relational-databases/system-tables/cdc-capture-instance-ct-transact-sql?view=sql-server-ver15
+         */
         static void Main(string[] args)
         {
-            var connectionString = "";
-            CT.Monitor monitor = new CT.Monitor(connectionString, 5);// 5 - Interval in seconds
-            monitor.OnError += Monitor_OnError;
-            monitor.OnRecordChnaged += Monitor_OnRecordChnaged;
-            monitor.AddTable("dbo.AMytable", "ID");
-            monitor.AddTable("dbo.AMytable2", "PRIMARYKEYCOL");
+            new CDCTest().Run();
 
-            monitor.Setup();
-
-            monitor.Start();
-            Console.ReadLine();
+            new CTTest().Run();
         }
 
-        private static void Monitor_OnRecordChnaged(object sender, CDCSqlMonitor.CT.EventArgs.DataChangedEventArgs e)
-        {
-            foreach (var item in e.ChangedEntities) 
-            {
-                Debug.WriteLine("Operation: "+ item.ChangeType.ToString()+"  Table: " +item.TableName +" ID: "+ item.PrimaryKeyValue + " ChangeVersion: "+item.SYS_CHANGE_VERSION + "\n");
-            }            
-        }
+        
 
-        private static void Monitor_OnError(object sender, CDCSqlMonitor.CT.EventArgs.ErrorEventArgs e)
-        {
-            Debug.WriteLine(e.Exception.StackTrace);
-        }
+       
     }
 }

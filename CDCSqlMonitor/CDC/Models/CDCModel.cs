@@ -25,10 +25,17 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CDCSqlMonitor.CDC.EventArgs
+namespace CDCSqlMonitor.CDC.Models
 {
-    public class ErrorEventArgs: System.EventArgs
-    {
-        public Exception Exception;
+    public class CDCModel
+    {        
+        public byte[] __start_Lsn { get; set; }
+        public byte[] __end_Lsn { get; set; }
+        public byte[] __seqval { get; set; }
+        public int __operation { get; set; }
+        public short __update_mask { get; set; }
+        public List<EntityColumn> Columns { get; set; }
+        public int __command_id { get; set; }
+        public string TableName { get; set; }
     }
 }

@@ -31,5 +31,6 @@ namespace CDCSqlMonitor.CT.EventArgs
     public class DataChangedEventArgs: System.EventArgs
     {
         public List<Entity> ChangedEntities { get; set; }
+        public long LastChangeVersion { get; set; }
     }
 }
