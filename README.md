@@ -68,24 +68,25 @@ Operation: D  Table: dbo.AMytable2 ID: newstringID ChangeVersion: 26
 Operation: U  Table: dbo.AMytable2 ID: stringID ChangeVersion: 27
 ```
 
-Note that you need to keep track of the changes by yourself. On the first run, it will return all changes on all described tables. In this example i had AMytable with 3 changes. If i run the program next time, then i need only new changes, so i will need to ignore other changes. 
+Note that you need to keep track of the changes by yourself. On the first run, it will return all changes on all described tables. \
+In this example i had AMytable with 3 changes. If i stop and run the program again, then i need only new changes, so i will need to pass parameter where to start from.
+
 Example:
 ```csharp
+
+//1. Keep track of change version
 private static void Monitor_OnRecordChnaged(object sender, CDCSqlMonitor.CT.EventArgs.DataChangedEventArgs e)
-        {
-            var mySavedLastChange = GetLastChange();//
-            foreach (var item in e.ChangedEntities) 
-            {
-                if(item.SYS_CHANGE_VERSION <= mySavedLastChange)
-                {
-                    //Do stuff
-                    if(item.SYS_CHANGE_VERSION > mySavedLastChange)
-                    {
-                        SaveLastChange(item.SYS_CHANGE_VERSION);//save last change number and read it later
-                    }
-                }
-            }            
-        }
+{
+   SaveLastChange(e.LastChangeVersion);
+}
+//2. On startup pass saved parameter
+void Start()
+{
+   var mySavedLastChange = GetLastChange();
+   CT.Monitor monitor = new CT.Monitor(connectionString, 5, mySavedLastChange);	
+}
+
+	
 ```
 
 ## CDC - Change Data Capture
@@ -198,3 +199,17 @@ Column: ID  Value: 10
 Column: Name  Value: row changed
 Column: Time  Value:
 ```
+
+
+If you want to see updates as sepparate rows, then you can access Raw data from DataChangedEventArgs:
+
+```csharp
+    private void Monitor_OnRecordChnaged(object sender, DataChangedEventArgs e)
+        {
+            foreach (var item in e.RawData)
+            {
+               //Do stuff
+            }
+        }
+```
+
