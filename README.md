@@ -5,6 +5,11 @@ CT - Change tracking. This will return only primary key value from changed table
 
 CDC - Change data capture. This will return changed columns on table. This is not supported on all sql server versions.
 
+# Install
+[Install-Package CDCSqlMonitor](https://www.nuget.org/packages/CDCSqlMonitor/1.0.0/)
+
+
+
 ## CT - Chnage Tracking
 Compatibility – All
 
@@ -237,3 +242,13 @@ void Start()
 
 	
 ```
+
+
+**Thanks to**
+ 
+https://stackoverflow.com/questions/5288434/how-to-monitor-sql-server-table-changes-by-using-c
+ 
+https://www.c-sharpcorner.com/uploadfile/satisharveti/introduction-to-cdc-change-data-capture-of-sql-server/
+	
+https://docs.microsoft.com/en-us/sql/relational-databases/system-tables/cdc-capture-instance-ct-transact-sql?view=sql-server-ver15
+
