@@ -242,3 +242,13 @@ void Start()
 
 	
 ```
+
+
+**Thanks to**
+ 
+https://stackoverflow.com/questions/5288434/how-to-monitor-sql-server-table-changes-by-using-c
+ 
+https://www.c-sharpcorner.com/uploadfile/satisharveti/introduction-to-cdc-change-data-capture-of-sql-server/
+	
+https://docs.microsoft.com/en-us/sql/relational-databases/system-tables/cdc-capture-instance-ct-transact-sql?view=sql-server-ver15
+
