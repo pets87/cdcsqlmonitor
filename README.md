@@ -5,8 +5,10 @@ CT - Change tracking. This will return only primary key value from changed table
 
 CDC - Change data capture. This will return changed columns on table. This is not supported on all sql server versions.
 
-
-[![Install-Package CDCSqlMonitor](https://github.com/pets87/cdcsqlmonitor/blob/main/icon.png)](https://www.nuget.org/packages/CDCSqlMonitor/1.0.0/)
+# Install
+[Install-Package CDCSqlMonitor](https://www.nuget.org/packages/CDCSqlMonitor/1.0.0/)
+\
+\
 
 ## CT - Chnage Tracking
 Compatibility – All
