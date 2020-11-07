@@ -15,6 +15,7 @@ CDC - Change data capture. This will return changed columns on table. This is no
     <RepositoryType>Github</RepositoryType>
     <PackageIcon>icon.png</PackageIcon>
     <PackageTags>CDCSqlMonitor SQL Server CDC CT SqlMonitor</PackageTags>
+    <PackageLicenseFile>LICENCE.txt</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +24,10 @@ CDC - Change data capture. This will return changed columns on table. This is no
 
   <ItemGroup>
     <None Include="..\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\LICENCE.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
