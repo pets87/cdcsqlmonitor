@@ -16,6 +16,9 @@ CDC - Change data capture. This will return changed columns on table. This is no
     <PackageIcon>icon.png</PackageIcon>
     <PackageTags>CDCSqlMonitor SQL Server CDC CT SqlMonitor</PackageTags>
     <PackageLicenseFile>LICENCE.txt</PackageLicenseFile>
+    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.1.1</AssemblyVersion>
+    <FileVersion>1.0.1.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
